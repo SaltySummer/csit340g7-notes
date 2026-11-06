@@ -98,6 +98,9 @@ function Notes(){
                             </li>
                         ))}
                     </ul>
+                    <p className="text-lg text-[#949494]">
+                        {notes.length === 0 ? "No notes available." : ``}
+                    </p>
                 </section>
             </div>
         </>
