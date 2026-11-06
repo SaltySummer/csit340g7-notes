@@ -7,6 +7,19 @@ function Notes(){
         { id: crypto.randomUUID(), title: "Prepare for the quiz", body: "Practice writing one handler for many inputs." }
     ]);
 
+    const [formData, setFormData] = useState({
+        title: "",
+        body: ""
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
     return (
         <>
             <div className="grid min-h-screen grid-cols-[420px_1fr]">
@@ -27,13 +40,17 @@ function Notes(){
                       <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
                       <input
                         name="title"
+                        value={formData.title}
                         placeholder="Title"
                         className="h-[52px] w-full border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
+                        onChange={handleChange}
                       />
-                      <textarea
+                      <textarea 
                         name="body"
+                        value={formData.body}
                         placeholder="Write your note"
                         className="h-[120px] w-full resize-none py-3 border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
+                        onChange={handleChange}
                       />
                       <button
                             type="submit"
@@ -45,7 +62,6 @@ function Notes(){
                 </aside>
                 <section className="px-12 py-11">
                     <h2 className="mb-6 text-3xl">All notes</h2>
-
                     <ul className="grid grid-cols-3 items-start gap-5">
                         {notes.map((note) => (
                             <li key={note.id} className="relative min-h-32 bg-white px-6 py-5 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]">
