@@ -28,12 +28,13 @@ function Notes(){
         if(trimmedTitle === "" || trimmedBody === "") {
             return;
         }
-        
+
         const newNote = {
             id: crypto.randomUUID(),
             title: formData.title,
             body: formData.body
         };
+
         setNotes((prevNotes) => [...prevNotes, newNote]);
         setFormData({
             title: "",
@@ -90,6 +91,7 @@ function Notes(){
                                 <button
                                     type="button" 
                                     className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
+                                    onClick={() => setNotes((prevNotes) => prevNotes.filter((n) => n.id !== note.id))}
                                 >
                                 x
                                 </button>
