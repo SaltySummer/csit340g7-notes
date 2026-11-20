@@ -34,6 +34,13 @@ function Notes(){
     },[notes])
 
     useEffect(() => {
+        const savedDraft = localStorage.getItem("draft");
+        if (savedDraft) {
+            setFormData(JSON.parse(savedDraft));
+        }
+    }, []);
+
+    useEffect(() => {
         const id = setTimeout(() => {
             localStorage.setItem("draft", JSON.stringify(formData));
         }, 1000);
@@ -68,6 +75,7 @@ function Notes(){
             title: "",
             body: ""
         });
+        localStorage.removeItem("draft");
         titleRef.current.focus();
     };
 
