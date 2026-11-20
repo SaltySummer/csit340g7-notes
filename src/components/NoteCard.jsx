@@ -1,14 +1,27 @@
-import { useState } from "react"; // 1. Don't forget to import useState
+import { useState, useContext } from "react";
+import { SettingsContext } from "../SettingsContext.js";
 
 function NoteCard({ title, body }) {
     const [visible, setVisible] = useState(false);
+    const { largeText } = useContext(SettingsContext);
 
   return (
     <div>
-      <h3 className="pr-8 text-[22px] font-normal break-words">{title}</h3>
+      <h3 
+      className={
+        largeText 
+        ? "pr-8 text-[28px] font-normal break-words" 
+        : "pr-8 text-[22px] font-normal break-words"
+      }
+      >{title}
+      </h3>
 
       {visible && 
-        <p className="mt-3 text-[17px] break-words whitespace-pre-wrap text-[#4d4d4d]">
+        <p className={
+          largeText 
+          ? "mt-3 text-[28px] break-words whitespace-pre-wrap text-[#4d4d4d]" 
+          : "mt-3 text-[17px] break-words whitespace-pre-wrap text-[#4d4d4d]"
+        }>
             {body}
         </p>
       }
