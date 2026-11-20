@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import { SettingsContext } from "../SettingsContext.js";
 
-function NoteCard({ title, body }) {
+function NoteCard({ id, title, body, onDelete }) {
     const [visible, setVisible] = useState(false);
     const { largeText } = useContext(SettingsContext);
+    console.log("render", title)
 
   return (
     <div>
@@ -27,13 +28,20 @@ function NoteCard({ title, body }) {
       }
       <button
         type="button"
-        onClick={() => setVisible(!visible)} // 2. Toggle the visibility state on click
+        onClick={() => setVisible(!visible)}
         className="mt-3 cursor-pointer text-[15px] font-normal text-[#b83f45] underline"
       >
-        {visible ? "Show less" : "Show more"} {/* 3. Swap text dynamically */}
+        {visible ? "Show less" : "Show more"}
+      </button>
+      <button
+        type="button"
+        onClick={() => onDelete(id)} 
+        className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
+      >
+        ×
       </button>
     </div>
   )
 }
 
-export default NoteCard;
+export default memo(NoteCard);
