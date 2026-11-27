@@ -14,11 +14,7 @@ function App() {
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem("largeText", JSON.stringify(largeText));
-    } catch {
-      // Do nothing for now i guess?
-    }
+    localStorage.setItem("largeText", JSON.stringify(largeText));
   }, [largeText]);
 
   return (
