@@ -14,6 +14,11 @@ const startingNotes = [
     }
 ]
 
+const initialFormData = {
+    title: "",
+    body: ""
+}
+
 function Notes(){
 
     const [notes, setNotes] = useState(() => {
@@ -21,9 +26,9 @@ function Notes(){
         return savedNotes ? JSON.parse(savedNotes):startingNotes;
     })
 
-    const [formData, setFormData] = useState({
-        title: "",
-        body: ""
+    const [formData, setFormData] = useState(()=>{
+        const savedDraft = localStorage.getItem("draft");
+        return savedDraft ? JSON.parse(savedDraft):initialFormData;
     });
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -32,13 +37,6 @@ function Notes(){
     useEffect(() => {
         localStorage.setItem("notes", JSON.stringify(notes));
     },[notes])
-
-    useEffect(() => {
-        const savedDraft = localStorage.getItem("draft");
-        if (savedDraft) {
-            setFormData(JSON.parse(savedDraft));
-        }
-    }, []);
 
     useEffect(() => {
         const id = setTimeout(() => {
