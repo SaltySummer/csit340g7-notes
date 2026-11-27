@@ -58,29 +58,29 @@ function Notes(){
         }));
     };
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
-        const trimmedTitle = formData.title.trim();
-        const trimmedBody = formData.body.trim();
+        const title = formData.title.trim();
+        const body = formData.body.trim();
 
-        if(trimmedTitle === "" || trimmedBody === "") {
-            return;
-        }
-
-        const newNote = {
-            id: crypto.randomUUID(),
-            title: formData.title,
-            body: formData.body
-        };
-
-        setNotes((prevNotes) => [...prevNotes, newNote]);
-        setFormData({
-            title: "",
-            body: ""
-        });
-        localStorage.removeItem("draft");
-        titleRef.current.focus();
-    };
+        if (!title || !body) return
+        try {
+            const res = await fetch(API_URL+'/notes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, body }),
+            })
+            if (!res.ok) {
+                throw new Error('The server answered ' + res.status)
+            }
+            const newNote = await res.json()
+            setNotes([...notes, newNote])
+            setFormData({ title: '', body: '' })
+            titleRef.current.focus()
+            } catch (err) {
+            setError(err.message)
+            }
+    }
 
     const filteredNotes = useMemo(() =>{
         return notes.filter((note) =>
